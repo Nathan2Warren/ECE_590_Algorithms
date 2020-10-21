@@ -71,27 +71,32 @@ class Queue:
     resize function to resize the queue by doubling its size.
     Note: we also reset the front to index 0.
     """
-    # Double the size of the queue
+    # Double the size of the stack
 
     def resize(self):
-        # If the list contains Nones not located at the end, when resizing set
-        # the elements in order at the start of the newly sized array and set
-        # the front index to 0
+        new_queue = [None for i in range(0, self.numElems * 2)]
         if self.rear <= self.front:
-            self.queue = self.queue[self.front:] + \
-                self.queue[:self.rear] + [None for x in range(len(self.queue))]
+            j = 0
+            for i in range(0, self.rear):
+                new_queue[j] = self.queue[i]
+                j += 1
+            for k in range(len(self.queue)):
+                new_queue[j] = None
+                j += 1
+            for l in range(self.rear, len(self.queue)):
+                new_queue[j] = self.queue[l]
+                j += 1
+            self.front += len(self.queue)
         else:
-            new_queue = [None for i in range(0, self.numElems * 2)]
             new_queue[0: self.numElems] = self.queue
-            self.queue = new_queue
-        self.front = 0
-        self.rear = self.numElems
+        self.queue = new_queue
+
         return
 
     """
     push function to push a value into the rear of the queue.
     """
-    # Check if resize is needed, then add value to top of queue
+    # Check if resize is needed, then add value to top of stack
 
     def push(self, val):
         if self.isFull():

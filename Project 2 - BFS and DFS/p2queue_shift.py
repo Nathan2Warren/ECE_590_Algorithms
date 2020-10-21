@@ -6,7 +6,7 @@ Fall 2020
 p2queue.py
 
 Partner 1: Nathan Warren (naw32)
-Partner 2: Varun Prasad (vp60)
+Partner 2: Varun PraSAD (vp60)
 Date: 10/17/20
 """
 
@@ -52,7 +52,6 @@ class Queue:
     """
     isFull function to check if the queue is full.
     """
-    # Check if full
 
     def isFull(self):
         if self.numElems == len(self.queue):
@@ -61,7 +60,6 @@ class Queue:
     """
     isEmpty function to check if the queue is empty.
     """
-    # Check if empty
 
     def isEmpty(self):
         if self.numElems == 0:
@@ -71,35 +69,21 @@ class Queue:
     resize function to resize the queue by doubling its size.
     Note: we also reset the front to index 0.
     """
-    # Double the size of the queue
 
     def resize(self):
-        # If the list contains Nones not located at the end, when resizing set
-        # the elements in order at the start of the newly sized array and set
-        # the front index to 0
-        if self.rear <= self.front:
-            self.queue = self.queue[self.front:] + \
-                self.queue[:self.rear] + [None for x in range(len(self.queue))]
-        else:
-            new_queue = [None for i in range(0, self.numElems * 2)]
-            new_queue[0: self.numElems] = self.queue
-            self.queue = new_queue
-        self.front = 0
-        self.rear = self.numElems
+        new_queue = [None for i in range(0, self.numElems * 2)]
+        new_queue[0: self.numElems] = self.queue
+        self.queue = new_queue
+
         return
 
     """
     push function to push a value into the rear of the queue.
     """
-    # Check if resize is needed, then add value to top of queue
 
     def push(self, val):
         if self.isFull():
             self.resize()
-
-        if self.rear >= len(self.queue) and self.queue[0] == None:
-            self.rear = 0
-
         self.queue[self.rear] = val
         self.rear += 1
         self.numElems += 1
@@ -108,7 +92,6 @@ class Queue:
     """
     pop function to pop the value from the front of the queue.
     """
-    # If list is not empty then remove the last value and store it as popped
 
     def pop(self):
         if self.isEmpty():
@@ -116,8 +99,39 @@ class Queue:
         else:
             popped = self.queue[self.front]
             self.queue[self.front] = None
-            self.front += 1
             self.numElems -= 1
-            if self.front >= len(self.queue):
-                self.front = 0
+            shifted = [None for i in range(0, len(self.queue))]
+            j = 0
+            for i in self.queue:
+                if i != None:
+                    shifted[j] = i
+                    j += 1
+            self.rear -= 1
+            self.queue = shifted
         return popped
+
+
+queue = Queue()
+queue.queue
+queue.push(1)
+queue.queue
+queue.push(2)
+queue.push(3)
+queue.queue
+queue.push(4)
+queue.queue
+queue.pop()
+queue.queue
+queue.pop()
+queue.queue
+queue.push(5)
+queue.push(6)
+queue.queue
+queue.push(7)
+queue.queue
+queue.push(8)
+queue.queue
+queue.push(9)
+queue.queue
+queue.push(10)
+queue.queue
