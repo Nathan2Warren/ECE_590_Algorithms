@@ -6,7 +6,7 @@ Fall 2020
 p2queue.py
 
 Partner 1: Nathan Warren (naw32)
-Partner 2: Varun PraSAD (vp60)
+Partner 2: Varun Prasad (vp60)
 Date: 10/17/20
 """
 

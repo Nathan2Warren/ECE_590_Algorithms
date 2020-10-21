@@ -27,6 +27,8 @@ alg:  A string that is either 'BFS' or 'DFS'.
 OUTPUTS
 path: The shortest path from maze.start to maze.exit.
 """
+
+
 def bdfs(maze, alg):
     # If the alg is not BFS or DFS, raise exception.
     if (alg != 'BFS') and (alg != 'DFS'):
@@ -59,9 +61,9 @@ def bdfs(maze, alg):
                 path.append(maze.exit.rank)
                 # Trace shortest path back through the maze
                 while current.prev is not None:
-                     previous = current.prev
-                     path.append(previous.rank)
-                     current = current.prev
+                    previous = current.prev
+                    path.append(previous.rank)
+                    current = current.prev
                 break
 
             # Check neighbors, initializing previous and visited values
@@ -97,9 +99,9 @@ def bdfs(maze, alg):
                 path.append(maze.exit.rank)
                 # Trace shortest path back through the maze
                 while current.prev is not None:
-                     previous = current.prev
-                     path.append(previous.rank)
-                     current = current.prev
+                    previous = current.prev
+                    path.append(previous.rank)
+                    current = current.prev
                 break
 
             # Check neighbors, initializing previous and visited values
@@ -111,6 +113,7 @@ def bdfs(maze, alg):
 
     # Return shortest path
     return path[::-1]
+
 
 """
 Main function.
