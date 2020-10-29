@@ -17,11 +17,13 @@ from p3tests import *
 """
 detectArbitrage
 """
+
+
 def detectArbitrage(adjList, adjMat, tol=1e-15):
     # Initialize vertex distances and previous vakyes
     for vertex in adjList:
-         vertex.dist = math.inf
-         vertex.prev = None
+        vertex.dist = math.inf
+        vertex.prev = None
     adjList[0].dist = 0
 
     # Initialize list and values for negative cost cycle
@@ -74,14 +76,16 @@ def detectArbitrage(adjList, adjMat, tol=1e-15):
 
 ################################################################################
 
+
 """
 rates2mat
 """
+
+
 def rates2mat(rates):
-    ##### Your implementation goes here. #####
-    # Currently this only returns a copy of the rates matrix.
+    # Returns negative log of rates as our edge weights
     return [[-math.log(R) for R in row] for row in rates]
-    ##### Your implementation goes here. #####
+
 
 """
 Main function.
