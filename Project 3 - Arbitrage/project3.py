@@ -16,6 +16,21 @@ from p3tests import *
 
 """
 detectArbitrage
+
+This function will first use the Bellman-Ford algorithm to update edges around
+the graph of exchange rates for N - 1 iterations, where N is the number of
+vertices. After performing one more iteration, it will detect if any additional
+updates are made, indicating a negative cost cycle is present.
+It will then identify the path of negative cost cycle to indicate that
+there is an arbitrage opportunity.
+
+INPUTS
+adjList: the adjacency list of Vertex objects
+adjMat:  the adjacency matrix (stored as a 2D list)
+tol: tolerance value for updating
+
+OUTPUTS
+neg_cycle: The path of vertices that represent a negative cost cycle
 """
 
 
@@ -79,13 +94,20 @@ def detectArbitrage(adjList, adjMat, tol=1e-15):
 
 """
 rates2mat
-"""
 
+This function will create an adjacency matrix of the exchange rates of different
+currencies. Using this function will be key for detecting arbitrage.
+
+INPUTS
+rates: 2D ist representing the exchange rates
+
+OUTPUTS
+negative log of the exchange rates for proper use in arbitrage detection
+"""
 
 def rates2mat(rates):
     # Returns negative log of rates as our edge weights
     return [[-math.log(R) for R in row] for row in rates]
-
 
 """
 Main function.
