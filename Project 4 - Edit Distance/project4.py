@@ -71,9 +71,9 @@ def ED(src, dest):
             c -= 1
             edits.append(('match', src[r], r))
         else:
-        # Else return appropriate edit
+            # Else return appropriate edit
             # Create list of edits and adjacent values
-            edit_list = ['sub','delete','insert']
+            edit_list = ['sub', 'delete', 'insert']
             val_list = [table[r-1][c-1], table[r-1][c], table[r][c-1]]
 
             # Identify index of minimum value and find corresponding edit
@@ -104,7 +104,7 @@ def ED(src, dest):
 
     # Calculate the total number of edits required
     dist = table[-1][-1]
-    return edits, dist
+    return dist, edits
 
 
 ################################################################################
