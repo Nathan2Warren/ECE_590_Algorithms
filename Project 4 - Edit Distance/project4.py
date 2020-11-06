@@ -14,13 +14,27 @@ from p4tests import *
 ################################################################################
 
 """
-ED: the edit distance function
+ED: the edit distance function. This function will use dynamic programming to
+determine the number of steps required to convert one string to another. A
+table will first be created, and the optimal edit solution will be traced
+back through the table. The specific steps for conversion will also be listed.
+
+Inputs:
+src: the source string
+dest: the string to which src must be converted
+
+Outputs:
+edits: a list that contains the specific edit step (e.g. 'insert'), the
+character that is edited, and the index of the character in the original string
+dist: the minimum number of edits to convert src to dest
 """
 
 
 def ED(src, dest):
+    # Initialize distance and edit list
     dist = 0
     edits = []
+
     # Create dynamic programming table (2D list)
     rows, cols = len(src) + 1, len(dest) + 1
     table = [[0 for j in range(cols)] for i in range(rows)]
@@ -48,44 +62,52 @@ def ED(src, dest):
                 table[i][j] = 1 + min([ins, delet, sub])
     # Backtrace from the optimal solution
     r, c = len(src), len(dest)
-    output = []
-    # Traceback the optimal solution
+
+    # Traceback the edits from the optimal solution
     while (r != 0) and (c != 0):
+        # If letters are equivalent, return 'match'
         if src[r-1] == dest[c-1]:
             r -= 1
             c -= 1
-            output.append(('match', src[r], r))
+            edits.append(('match', src[r], r))
         else:
-            move_dir = {"sub": table[r-1][c-1], "delete": table[r-1][c], "insert": table[r][c-1]}
+        # Else return appropriate edit
+            # Create list of edits and adjacent values
+            edit_list = ['sub','delete','insert']
+            val_list = [table[r-1][c-1], table[r-1][c], table[r][c-1]]
 
-            val_list = list(move_dir.values())
-            key_list = list(move_dir.keys())
+            # Identify index of minimum value and find corresponding edit
+            move_val_index = val_list.index(min(val_list))
+            move_key = edit_list[move_val_index]
 
-            move_val = min(val_list)
-            move_key = key_list[val_list.index(move_val)]
-
+            # Add specific edit to list based on determined min step
             if move_key == "sub":
                 r -= 1
                 c -= 1
-                output.append((move_key, dest[c], r))
+                edits.append((move_key, dest[c], r))
             elif move_key == "delete":
                 r -= 1
-                output.append((move_key, src[r], r))
+                edits.append((move_key, src[r], r))
             else:
                 c -= 1
-                output.append((move_key, dest[c], r))
+                edits.append((move_key, dest[c], r))
+
+    # Consider base case of being along left column (all deletions)
     while r != 0:
         r -= 1
-        output.append(('delete', src[r], r))
+        edits.append(('delete', src[r], r))
+
+    # Consider base case of being along top row (all insertions)
     while c != 0:
         c -= 1
-        output.append(('insert', dest[c], r))
+        edits.append(('insert', dest[c], r))
+
+    # Calculate the total number of edits required
     dist = table[-1][-1]
-    return dist, output
+    return edits, dist
 
 
 ################################################################################
-
 """
 Main function.
 """
